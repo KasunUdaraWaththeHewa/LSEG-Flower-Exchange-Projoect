@@ -375,15 +375,18 @@ void load_csv(){
         cout << "Error: Unable to open the Orders.csv file." << endl;
         return;
     }else{
-        fin << "Client Order ID" << "," << "Instrument" << "," << "Side" << "," << "Price" << "," << "Quantity" << "," << "Trader ID" << "," <<endl;
+        //fin << "Client Order ID" << "," << "Instrument" << "," << "Side" << "," << "Price" << "," << "Quantity" << "," << "Trader ID" << "," <<endl;
         string line;
         getline(fin, line); //skip the header line
+
         while(getline(fin, line)){
             timeStarted = chrono::system_clock::now();
             stringstream ss(line);
+
             string client_order_id, instrument, side, price, quantity, trader_id;
             string order_id,reason,transaction_time;
             string status="New";
+
             getline(ss, client_order_id, ',');
             getline(ss, instrument, ',');
             getline(ss, side, ',');
@@ -392,7 +395,22 @@ void load_csv(){
             getline(ss, trader_id, ',');
             order_id="ord"+ to_string(i);
             i++;
-            Order order = {client_order_id, instrument, stoi(side), stod(price), stoi(quantity), trader_id ,order_id, status ,reason};
+
+            int sideInt;
+            double priceDouble;
+            int quantityInt;
+
+            try {
+                sideInt = std::stoi(side);
+                priceDouble = std::stod(price);
+                quantityInt = std::stoi(quantity);
+            } catch (const std::invalid_argument& e) {
+                // Handle the exception when the conversion fails
+                std::cout << "Error: Invalid argument encountered. Skipping the current line." << std::endl;
+                continue;  // Skip to the next line or perform other appropriate actions
+            }
+
+            Order order = {client_order_id, instrument, sideInt, priceDouble, quantityInt, trader_id ,order_id, status ,reason};
             if(order.client_order_id.size()<=7){
                 if((instrument=="Rose")||(instrument=="Lavender")||(instrument=="Lotus")||(instrument=="Tulip")||(instrument=="Orchid")){
                     if((side=="1")||(side=="2")){
