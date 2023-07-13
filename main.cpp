@@ -1,21 +1,17 @@
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <algorithm>
-#include <cstdio>
-#include <string>
-#include <Windows.h>
-#include <chrono>
-#include <thread>
-#include <iomanip>
+#include <iostream> //For input and output functionalities
+#include <vector>   //To use vectors
+#include <fstream>  //To work with files
+#include <algorithm>//To use the sort function
+#include <string>   //To get the functions related to stings
+#include <chrono>   //To calculate time durations
+#include <iomanip>  //To use the functions for formatting input/output operations
 
 using namespace std;
 
 chrono::system_clock::time_point timeStarted;
 chrono::system_clock::time_point timeEnded;
 
-//creating struct named order
+//creating struct named order to hold the details of one order
 typedef struct Order{
     string client_order_id;
     string instruments;
@@ -30,8 +26,8 @@ typedef struct Order{
 
 string transactionTime(){
     //std::chrono::duration<double> duration = timeEnded - timeStarted;
-   // SYSTEMTIME sTime = duration;
-  //  GetLocalTime(&sTime);
+    //SYSTEMTIME sTime = duration;
+    // GetLocalTime(&sTime);
     time_t started_Time = std::chrono::system_clock::to_time_t(timeStarted);
     time_t ended_Time = std::chrono::system_clock::to_time_t(timeEnded);
     time_t duration=ended_Time-started_Time;
@@ -50,41 +46,41 @@ vector<Order> sellOrders;
 int i=0;
 
 void createOrderBooksAndReports(){
-    fstream fout;
-    remove("OrderBookRose.csv");
-    fout.open("OrderBookRose.csv", ios::out | ios::app);
+    fstream fout;   //create an object of type fstream
+    remove("OrderBookRose.csv");    //Remove previously existing data in the file
+    fout.open("OrderBookRose.csv", ios::out | ios::app);    //open the file in append mode : out - write , app - append
     if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("OrderBookLavender.csv");
     fout.open("OrderBookLavender.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("OrderBookLotus.csv");
     fout.open("OrderBookLotus.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("OrderBookTulip.csv");
     fout.open("OrderBookTulip.csv", ios::out | ios::app);
-    1;if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+    if(fout.is_open()){
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("OrderBookOrchid.csv");
     fout.open("OrderBookOrchid.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("Execution_rep.csv");
     fout.open("Execution_rep.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << "Order ID"<< "," << "client_order_id "<< "," << "instruments" << "," << "side" << "," << "status" << "," << "quantity" << "," << "price" << "," << "reason" << "," << "trader_id" << "," << "transaction_time" << endl;
+        fout << "Order ID"<< "," << "Client_order_id "<< "," << "Instruments" << "," << "Side" << "," << "Status" << "," << "Quantity" << "," << "Price" << "," << "Reason" << "," << "Trader_id" << "," << "Transaction_time" << endl;
         fout.close();
     }
 }
@@ -467,7 +463,7 @@ void addOrder(){
     cout<<"Enter client_order_id : ";
     cin>>client_order_id;
     if(client_order_id.size()<=7){
-        cout<<"Enter instrumrnt : ";
+        cout<<"Enter instrument : ";
         cin>>instrument;
         if((instrument=="Rose")||(instrument=="Lavender")||(instrument=="Lotus")||(instrument=="Tulip")||(instrument=="Orchid")){
             cout<<"Enter Side : ";
