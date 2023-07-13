@@ -86,10 +86,10 @@ void createOrderBooksAndReports(){
     }
 }
 bool compareBuy(const Order & a, const Order & b) {
-    return a.price < b.price;
+    return a.price > b.price;
 }
 bool compareSell(const Order & a, const Order & b) {
-    return a.price > b.price;
+    return a.price < b.price;
 }
 void updateOrderBooks(Order od){
     fstream fout;

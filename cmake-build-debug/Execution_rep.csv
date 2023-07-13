@@ -1,7 +1,13 @@
 Order ID,Client_order_id ,Instruments,Side,Status,Quantity,Price,Reason,Trader_id,Transaction_time
-ord0,ord01,Rose,1,New,1000,100,,tr01,..-...-349
+ord0,aa13,Rose,1,New,100,55,,tr01,..-...-427
 
-ord0,ord01,Rose,1,New,1000,100,,tr01,1970.01.01-05.30.00.000
+ord1,aa14,Rose,1,New,100,65,,tr02,..-...-20
 
-ord1,co01,Rose,1,New,200,100,,tr01,..-...-33
+ord2,aa15,Rose,2,pFill,200,1,,tr03,..-...-26
+,100,65
+ord1,aa14,Rose,1,Fill,100,65,,tr02,1970.01.01-05.30.00.000
+
+ord2,aa15,Rose,2,pFill,100,1,,tr03,1970.01.01-05.30.00.000
+,100,55
+ord0,aa13,Rose,1,Fill,100,55,,tr01,1970.01.01-05.30.00.000
 
