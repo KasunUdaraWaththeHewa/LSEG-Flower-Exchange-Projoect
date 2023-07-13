@@ -1,11 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <sstream>
 #include <algorithm>
 #include <cstdio>
 #include <string>
-#include <Windows.h>
 #include <chrono>
 #include <thread>
 #include <iomanip>
