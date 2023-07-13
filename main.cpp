@@ -6,10 +6,16 @@
 #include <cstdio>
 #include <string>
 #include <Windows.h>
+#include <chrono>
+#include <thread>
+#include <iomanip>
 
 using namespace std;
 
-//creating three structs
+chrono::system_clock::time_point timeStarted;
+chrono::system_clock::time_point timeEnded;
+
+//creating struct named order
 typedef struct Order{
     string client_order_id;
     string instruments;
@@ -20,14 +26,19 @@ typedef struct Order{
     string order_id;
     basic_string<char> status;
     string reason;
-    string transaction_time;
 }Order;
 
 string transactionTime(){
-    SYSTEMTIME sTime;
-    GetLocalTime(&sTime);
+    //std::chrono::duration<double> duration = timeEnded - timeStarted;
+   // SYSTEMTIME sTime = duration;
+  //  GetLocalTime(&sTime);
+    time_t started_Time = std::chrono::system_clock::to_time_t(timeStarted);
+    time_t ended_Time = std::chrono::system_clock::to_time_t(timeEnded);
+    time_t duration=ended_Time-started_Time;
+    tm* timeInfo = std::localtime(&duration);
     stringstream buf;
-    buf << sTime.wYear << "-" << sTime.wMonth << "-" << sTime.wDay << " " << sTime.wHour << ":" << sTime.wMinute << ":" << sTime.wSecond << ":" << sTime.wMilliseconds;
+    buf << put_time(timeInfo, "%Y.%m.%d-%H.%M.%S") << "." << setfill('0') << setw(3) << duration%1000 << "\n";
+    //buf << sTime.wYear << "-" << sTime.wMonth << "-" << sTime.wDay << " " << sTime.wHour << ":" << sTime.wMinute << ":" << sTime.wSecond << ":" << sTime.wMilliseconds;
     return buf.str();
 }
 
@@ -35,6 +46,7 @@ string transactionTime(){
 vector<Order> orders;
 vector<Order> buyOrders;
 vector<Order> sellOrders;
+
 int i=0;
 
 void createOrderBooksAndReports(){
@@ -59,7 +71,7 @@ void createOrderBooksAndReports(){
     }
     remove("OrderBookTulip.csv");
     fout.open("OrderBookTulip.csv", ios::out | ios::app);
-    ;if(fout.is_open()){
+    1;if(fout.is_open()){
         fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
         fout.close();
     }
@@ -142,10 +154,11 @@ void updateOrderBooks(Order od){
     }
 }
 void updateExecutionReport(Order od, int quantity = -1, double price = -1.0) {
+    string transaction_time =transactionTime();
     fstream fout;
     fout.open("Execution_rep.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << od.order_id << "," << od.client_order_id << "," << od.instruments << "," << od.side << "," << od.status << "," << od.quantity << "," << od.price << "," << od.reason << "," << od.trader_id << "," << od.transaction_time;
+        fout << od.order_id << "," << od.client_order_id << "," << od.instruments << "," << od.side << "," << od.status << "," << od.quantity << "," << od.price << "," << od.reason << "," << od.trader_id << "," << transaction_time;
         if(quantity != -1) {
             fout << "," << quantity;
         }
@@ -155,6 +168,7 @@ void updateExecutionReport(Order od, int quantity = -1, double price = -1.0) {
         fout << endl;
         fout.close();
         cout<<"\n\n";
+        timeEnded = chrono::system_clock::now();
     }
 }
 
@@ -365,6 +379,7 @@ void load_csv(){
         string line;
         getline(fin, line); //skip the header line
         while(getline(fin, line)){
+            timeStarted = chrono::system_clock::now();
             stringstream ss(line);
             string client_order_id, instrument, side, price, quantity, trader_id;
             string order_id,reason,transaction_time;
@@ -377,8 +392,7 @@ void load_csv(){
             getline(ss, trader_id, ',');
             order_id="ord"+ to_string(i);
             i++;
-            transaction_time=transactionTime();
-            Order order = {client_order_id, instrument, stoi(side), stod(price), stoi(quantity), trader_id ,order_id, status ,reason,transaction_time};
+            Order order = {client_order_id, instrument, stoi(side), stod(price), stoi(quantity), trader_id ,order_id, status ,reason};
             if(order.client_order_id.size()<=7){
                 if((instrument=="Rose")||(instrument=="Lavender")||(instrument=="Lotus")||(instrument=="Tulip")||(instrument=="Orchid")){
                     if((side=="1")||(side=="2")){
@@ -387,6 +401,8 @@ void load_csv(){
                                 if(trader_id.size()<=7){
                                     //not rejected
                                     updateOrderBooks(order);
+                                    orders.push_back(order);
+                                    findOrder(order, buyOrders, sellOrders);
                                 }else{
                                     status="rejected";
                                     reason="invalid trader_id";
@@ -426,11 +442,10 @@ void addOrder(){
     double price;
     int quantity;
     string trader_id;
-    string order_id,reason,transaction_time;
+    string order_id,reason;
     string status="New";
     order_id="ord"+ to_string(i);
     i++;
-    transaction_time=transactionTime();
     cout<<"Enter client_order_id : ";
     cin>>client_order_id;
     if(client_order_id.size()<=7){
@@ -449,14 +464,14 @@ void addOrder(){
                         cout<<"Enter Trader ID : ";
                         cin>>trader_id;
                         if(trader_id.size()<=7){
-                            Order order = {client_order_id, instrument, side, price, quantity, trader_id ,order_id, status ,reason,transaction_time};
-                            orders.push_back(order);
+                            Order order = {client_order_id, instrument, side, price, quantity, trader_id ,order_id, status ,reason};
                             updateOrderBooks(order);
                             fstream fout;
                             fout.open("Orders.csv", ios::out | ios::app);
                             fout << client_order_id << "," << instrument << "," << side << "," << price << "," << quantity << "," << trader_id << endl;
                             fout.close();
                             orders.push_back(order);
+                            timeStarted = chrono::system_clock::now();
                             findOrder(order, buyOrders, sellOrders);
                         }else{
                             cout<<"Invalid trader ID. Enter Details again\n\n";
