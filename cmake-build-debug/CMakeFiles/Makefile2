@@ -53,10 +53,10 @@ RM = "C:\Program Files\JetBrains\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect"
+CMAKE_SOURCE_DIR = "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug"
+CMAKE_BINARY_DIR = "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -80,14 +80,14 @@ clean: CMakeFiles/Flower_Exchange_group_project.dir/clean
 CMakeFiles/Flower_Exchange_group_project.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Flower_Exchange_group_project.dir\build.make CMakeFiles/Flower_Exchange_group_project.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Flower_Exchange_group_project.dir\build.make CMakeFiles/Flower_Exchange_group_project.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" --progress-num=1,2 "Built target Flower_Exchange_group_project"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" --progress-num=1,2 "Built target Flower_Exchange_group_project"
 .PHONY : CMakeFiles/Flower_Exchange_group_project.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Flower_Exchange_group_project.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/Flower_Exchange_group_project.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" 0
 .PHONY : CMakeFiles/Flower_Exchange_group_project.dir/rule
 
 # Convenience name for target.

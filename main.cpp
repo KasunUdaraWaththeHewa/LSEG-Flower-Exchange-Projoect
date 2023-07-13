@@ -46,6 +46,7 @@ vector<Order> sellOrders;
 int i=0;
 
 void createOrderBooksAndReports(){
+    cout<<"OrderBooks and Execution Books generated.\n";
     fstream fout;   //create an object of type fstream
     remove("OrderBookRose.csv");    //Remove previously existing data in the file
     fout.open("OrderBookRose.csv", ios::out | ios::app);    //open the file in append mode : out - write , app - append
@@ -148,6 +149,7 @@ void updateOrderBooks(Order od){
 
         }
     }
+    cout<<"relevent OrderBooks  updated.\n";
 }
 void updateExecutionReport(Order od, int quantity = -1, double price = -1.0) {
     string transaction_time =transactionTime();
@@ -165,6 +167,7 @@ void updateExecutionReport(Order od, int quantity = -1, double price = -1.0) {
         fout.close();
         cout<<"\n\n";
         timeEnded = chrono::system_clock::now();
+        cout<<"Executionreport.csv updated.\n";
     }
 }
 
@@ -450,6 +453,7 @@ void load_csv(){
     }
 }
 void addOrder(){
+    cout<<"You chosed adding new Order\n";
     string client_order_id;
     string instrument;
     int side;
@@ -460,24 +464,26 @@ void addOrder(){
     string status="New";
     order_id="ord"+ to_string(i);
     i++;
-    cout<<"Enter client_order_id : ";
+    cout<<"\n";
+    cout<<"Enter client_order_id (client Order Id should be less than or equal to 7 characters) : ";
     cin>>client_order_id;
     if(client_order_id.size()<=7){
-        cout<<"Enter instrument : ";
+        cout<<"Enter instrument (Instruments can be 'Rose, Lavender, Lotus, Tulip, Orchid) : ";
         cin>>instrument;
         if((instrument=="Rose")||(instrument=="Lavender")||(instrument=="Lotus")||(instrument=="Tulip")||(instrument=="Orchid")){
-            cout<<"Enter Side : ";
+            cout<<"Enter Side (For buyers 1, for Sellers 2 ): ";
             cin>>side;
             if((side==1)||(side==2)){
-                cout<<"Enter price : ";
+                cout<<"Enter price (Enter Valid Price) : ";
                 cin>>price;
                 if(price>0.0){
-                    cout<<"Enter quantity : ";
+                    cout<<"Enter quantity (Quantity should be 10<quantity<=1000 and a multiple of 10 ): ";
                     cin>>quantity;
                     if(((quantity<=1000)&&(quantity>10))&&(quantity%10==0)){
                         cout<<"Enter Trader ID : ";
                         cin>>trader_id;
                         if(trader_id.size()<=7){
+                            cout<<"You have added valid data so your orderbooks and execution report will be generated soon\n";
                             Order order = {client_order_id, instrument, side, price, quantity, trader_id ,order_id, status ,reason};
                             updateOrderBooks(order);
                             fstream fout;
@@ -509,11 +515,12 @@ void addOrder(){
 
 
 int main() {
-    load_csv();// load .csv's data to the vector order
-    int ch=0;
     cout<<"Welcome to Flora Lanka........... \n\n";
+    load_csv();// load .csv's data to the vector order
+    cout <<"existing Orders.csv's data are loaded \n\n";
+    int ch=0;
     do{
-        cout<<"Add order - (+1)\tTerminate - (-1)\n";
+        cout<<"Add order - ( press +1)\tTerminate - (press -1)\n";
         cout<<"Enter What you want to proceed : ";
         cin>>ch;
         cout<<"\n";
