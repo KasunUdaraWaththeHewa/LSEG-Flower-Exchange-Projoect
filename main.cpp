@@ -25,17 +25,19 @@ typedef struct Order{
 }Order;
 
 string transactionTime(){
-    //std::chrono::duration<double> duration = timeEnded - timeStarted;
+    std::chrono::duration<double> duration = timeEnded - timeStarted;
     //SYSTEMTIME sTime = duration;
     // GetLocalTime(&sTime);
-    time_t started_Time = std::chrono::system_clock::to_time_t(timeStarted);
-    time_t ended_Time = std::chrono::system_clock::to_time_t(timeEnded);
-    time_t duration=ended_Time-started_Time;
-    tm* timeInfo = std::localtime(&duration);
-    stringstream buf;
-    buf << put_time(timeInfo, "%Y.%m.%d-%H.%M.%S") << "." << setfill('0') << setw(3) << duration%1000 << "\n";
-    //buf << sTime.wYear << "-" << sTime.wMonth << "-" << sTime.wDay << " " << sTime.wHour << ":" << sTime.wMinute << ":" << sTime.wSecond << ":" << sTime.wMilliseconds;
-    return buf.str();
+    //time_t started_Time = std::chrono::system_clock::to_time_t(timeStarted);
+    //time_t ended_Time = std::chrono::system_clock::to_time_t(timeEnded);
+    //time_t duration=ended_Time-started_Time;
+    //tm* timeInfo = std::localtime(&duration);
+   return to_string(duration.count());
+    //stringstream buf;
+//    buf << put_time(timeInfo, "%Y.%m.%d-%H.%M.%S") << "." << setfill('0') << setw(3) << duration%1000 << "\n";
+//    buf << sTime.wYear << "-" << sTime.wMonth << "-" << sTime.wDay << " " << sTime.wHour << ":" << sTime.wMinute << ":" << sTime.wSecond << ":" << sTime.wMilliseconds;
+   // return buf.str();
+
 }
 
 //creating three vectors to store data
@@ -85,12 +87,7 @@ void createOrderBooksAndReports(){
         fout.close();
     }
 }
-bool compareBuy(const Order & a, const Order & b) {
-    return a.price > b.price;
-}
-bool compareSell(const Order & a, const Order & b) {
-    return a.price < b.price;
-}
+
 void updateOrderBooks(Order od){
     fstream fout;
     if(od.instruments == "Rose"){
@@ -149,13 +146,13 @@ void updateOrderBooks(Order od){
 
         }
     }
-    cout<<"relevent OrderBooks  updated.\n";
 }
 void updateExecutionReport(Order od, int quantity = -1, double price = -1.0) {
-    string transaction_time =transactionTime();
     fstream fout;
     fout.open("Execution_rep.csv", ios::out | ios::app);
     if(fout.is_open()){
+        timeEnded = chrono::system_clock::now();
+        string transaction_time =transactionTime();
         fout << od.order_id << "," << od.client_order_id << "," << od.instruments << "," << od.side << "," << od.status << "," << od.quantity << "," << od.price << "," << od.reason << "," << od.trader_id << "," << transaction_time;
         if(quantity != -1) {
             fout << "," << quantity;
@@ -165,17 +162,20 @@ void updateExecutionReport(Order od, int quantity = -1, double price = -1.0) {
         }
         fout << endl;
         fout.close();
-        cout<<"\n\n";
-        timeEnded = chrono::system_clock::now();
-        cout<<"Executionreport.csv updated.\n";
     }
+}
+bool compareBuy(const Order & a, const Order & b) {
+    return a.price < b.price;
+}
+bool compareSell(const Order & a, const Order & b) {
+    return a.price > b.price;
 }
 
 void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
 
     if (order.side == 1){//if buyer
         if (sell.empty()){//if sell vector is empty
-            buy.push_back(order);
+            buy.push_back(order);//buy order is added to the vector buy
             sort(buy.begin(), buy.end(), compareBuy);
             if (order.status != "pFill")
                 updateExecutionReport(order);
@@ -185,15 +185,15 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
             Order s = sell[j];
             if (s.instruments != order.instruments)
                 continue;
-            if (s.price > order.price){//if s.price>order.price
+            if (s.price > order.price){
                 buy.push_back(order);
                 sort(buy.begin(), buy.end(), compareBuy);
                 if (order.status != "pFill")
                     updateExecutionReport(order);
                 return;
             }
-            else if (s.price == order.price){//if s.price == order.price
-                if (s.quantity == order.quantity){ //if s.quantity==order.quantity
+            else if (s.price == order.price){
+                if (s.quantity == order.quantity){
                     order.status = "Fill";
                     updateExecutionReport(order);
                     s.status = "Fill";
@@ -202,7 +202,7 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
                     sort(sell.begin(), sell.end(), compareSell);
 
                     return;
-                }else if (s.quantity < order.quantity){//if s.quantity < order.quantity
+                }else if (s.quantity < order.quantity){
                     order.status = "pFill";
                     order.quantity = order.quantity - s.quantity;
                     updateExecutionReport(order,s.quantity);
@@ -229,17 +229,17 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
                 }
             }
             else{// sells.Price < price
-                if (s.quantity == order.quantity){//if s.quantity==order.quantity
+                if (s.quantity == order.quantity){
                     order.status = "Fill";
-                    updateExecutionReport(order, s.price);
+                    updateExecutionReport(order, order.price);  //------------------------------------
                     s.status = "Fill";
                     updateExecutionReport(s);
                     sell.erase(sell.begin() + j);
                     sort(sell.begin(), sell.end(), compareSell);
                     return;
-                }else if (s.quantity > order.quantity){//if s.quantity==order.quantity
+                }else if (s.quantity > order.quantity){
                     order.status = "Fill";
-                    updateExecutionReport(order,s.price);
+                    updateExecutionReport(order,order.price);
                     s.status = "pFill";
                     s.quantity = s.quantity - order.quantity;
                     updateExecutionReport(s,order.quantity);
@@ -249,8 +249,8 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
                 {
                     order.status = "pFill";
                     order.quantity = order.quantity - s.quantity;
-                    updateExecutionReport(order,s.quantity, s.price);
-                    s.status = 2;
+                    updateExecutionReport(order,s.quantity, order.price);
+                    s.status = "Fill";
                     updateExecutionReport(order);
                     sell.erase(sell.begin() + j);
                     sort(sell.begin(), sell.end(), compareSell);
