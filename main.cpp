@@ -16,11 +16,11 @@ typedef struct Order{
     string client_order_id;
     string instruments;
     int side;
-    double price;
     int quantity;
+    double price;
     string trader_id;
     string order_id;
-    basic_string<char> status;
+    string status;
     string reason;
 }Order;
 
@@ -32,11 +32,11 @@ string transactionTime(){
     //time_t ended_Time = std::chrono::system_clock::to_time_t(timeEnded);
     //time_t duration=ended_Time-started_Time;
     //tm* timeInfo = std::localtime(&duration);
-   return to_string(duration.count());
+    return to_string(duration.count());
     //stringstream buf;
 //    buf << put_time(timeInfo, "%Y.%m.%d-%H.%M.%S") << "." << setfill('0') << setw(3) << duration%1000 << "\n";
 //    buf << sTime.wYear << "-" << sTime.wMonth << "-" << sTime.wDay << " " << sTime.wHour << ":" << sTime.wMinute << ":" << sTime.wSecond << ":" << sTime.wMilliseconds;
-   // return buf.str();
+    // return buf.str();
 
 }
 
@@ -154,21 +154,15 @@ void updateExecutionReport(Order od, int quantity = -1, double price = -1.0) {
         timeEnded = chrono::system_clock::now();
         string transaction_time =transactionTime();
         fout << od.order_id << "," << od.client_order_id << "," << od.instruments << "," << od.side << "," << od.status << "," << od.quantity << "," << od.price << "," << od.reason << "," << od.trader_id << "," << transaction_time;
-        if(quantity != -1) {
-            fout << "," << quantity;
-        }
-        if(price != -1.0) {
-            fout << "," << price;
-        }
         fout << endl;
         fout.close();
     }
 }
 bool compareBuy(const Order & a, const Order & b) {
-    return a.price < b.price;
+    return a.price > b.price;
 }
 bool compareSell(const Order & a, const Order & b) {
-    return a.price > b.price;
+    return a.price < b.price;
 }
 
 void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
@@ -231,7 +225,7 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
             else{// sells.Price < price
                 if (s.quantity == order.quantity){
                     order.status = "Fill";
-                    updateExecutionReport(order, order.price);  //------------------------------------
+                    updateExecutionReport(order, s.price);  //------------------------------------
                     s.status = "Fill";
                     updateExecutionReport(s);
                     sell.erase(sell.begin() + j);
@@ -239,7 +233,7 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
                     return;
                 }else if (s.quantity > order.quantity){
                     order.status = "Fill";
-                    updateExecutionReport(order,order.price);
+                    updateExecutionReport(order,s.price);
                     s.status = "pFill";
                     s.quantity = s.quantity - order.quantity;
                     updateExecutionReport(s,order.quantity);
@@ -249,7 +243,7 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
                 {
                     order.status = "pFill";
                     order.quantity = order.quantity - s.quantity;
-                    updateExecutionReport(order,s.quantity, order.price);
+                    updateExecutionReport(order,s.quantity, s.price);
                     s.status = "Fill";
                     updateExecutionReport(order);
                     sell.erase(sell.begin() + j);
@@ -363,7 +357,7 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
         sort(sell.begin(), sell.end(), compareSell);
         if (order.status != "pFill")
             updateExecutionReport(order);
-    }
+        }
 }
 
 void load_csv(){
@@ -389,8 +383,8 @@ void load_csv(){
             getline(ss, client_order_id, ',');
             getline(ss, instrument, ',');
             getline(ss, side, ',');
-            getline(ss, price, ',');
             getline(ss, quantity, ',');
+            getline(ss, price, ',');
             getline(ss, trader_id, ',');
             order_id="ord"+ to_string(i);
             i++;
@@ -409,41 +403,41 @@ void load_csv(){
                 continue;  // Skip to the next line or perform other appropriate actions
             }
 
-            Order order = {client_order_id, instrument, sideInt, priceDouble, quantityInt, trader_id ,order_id, status ,reason};
+            Order order = {client_order_id, instrument, sideInt, quantityInt,priceDouble, trader_id ,order_id, status ,reason};
             if(order.client_order_id.size()<=7){
-                if((instrument=="Rose")||(instrument=="Lavender")||(instrument=="Lotus")||(instrument=="Tulip")||(instrument=="Orchid")){
-                    if((side=="1")||(side=="2")){
+                if((order.instruments=="Rose")||(order.instruments=="Lavender")||(order.instruments=="Lotus")||(order.instruments=="Tulip")||(order.instruments=="Orchid")){
+                    if((order.side == 1 )||(order.side==2)){
                         if(order.price>0.0){
-                            if(((order.quantity<=1000)&&(order.quantity>10))&&(order.quantity%10==0)){
+                            if(((order.quantity<1000)&&(order.quantity>10))&&(order.quantity%10==0)){
                                 if(trader_id.size()<=7){
                                     //not rejected
                                     updateOrderBooks(order);
                                     orders.push_back(order);
                                     findOrder(order, buyOrders, sellOrders);
                                 }else{
-                                    status="rejected";
-                                    reason="invalid trader_id";
+                                    order.status="rejected";
+                                    order.reason="invalid trader_id";
                                 }
                             }else{
-                                status="rejected";
-                                reason="invalid quantity";
+                                order.status="rejected";
+                                order.reason="invalid quantity";
                             }
                         }else{
-                            status="rejected";
-                            reason="invalid price";
+                            order.status="rejected";
+                            order.reason="invalid price";
                         }
                     }else{
-                        status="rejected";
-                        reason="invalid side";
+                        order.status="rejected";
+                        order.reason="invalid side";
                     }
                 }else{
-                    status="rejected";
-                    reason="invalid instruments";
+                    order.status="rejected";
+                    order.reason="invalid instruments";
                 }
 
             }else{
-                status="rejected";
-                reason="invalid client order id";
+                order.status="rejected";
+                order.reason="invalid client order id";
             }
 
             orders.push_back(order);
@@ -484,11 +478,11 @@ void addOrder(){
                         cin>>trader_id;
                         if(trader_id.size()<=7){
                             cout<<"You have added valid data so your orderbooks and execution report will be generated soon\n";
-                            Order order = {client_order_id, instrument, side, price, quantity, trader_id ,order_id, status ,reason};
+                            Order order = {client_order_id, instrument, side, quantity, price, trader_id ,order_id, status ,reason};
                             updateOrderBooks(order);
                             fstream fout;
                             fout.open("Orders.csv", ios::out | ios::app);
-                            fout << client_order_id << "," << instrument << "," << side << "," << price << "," << quantity << "," << trader_id << endl;
+                            fout << client_order_id << "," << instrument << "," << side << "," << quantity << "," << price << "," << trader_id << endl;
                             fout.close();
                             orders.push_back(order);
                             timeStarted = chrono::system_clock::now();
