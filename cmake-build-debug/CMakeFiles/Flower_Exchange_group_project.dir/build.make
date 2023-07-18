@@ -52,10 +52,17 @@ RM = "C:\Program Files\JetBrains\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
 CMAKE_SOURCE_DIR = "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect"
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug"
+=======
+CMAKE_SOURCE_DIR = "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect"
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug"
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Flower_Exchange_group_project.dir/depend.make
@@ -69,6 +76,7 @@ include CMakeFiles/Flower_Exchange_group_project.dir/progress.make
 include CMakeFiles/Flower_Exchange_group_project.dir/flags.make
 
 CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.obj: CMakeFiles/Flower_Exchange_group_project.dir/flags.make
+<<<<<<< HEAD
 CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.obj: C:/Users/Samudi\ Perera/Desktop/LSEG-Flower-Exchange-Projoect/main.cpp
 CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.obj: CMakeFiles/Flower_Exchange_group_project.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.obj"
@@ -81,6 +89,20 @@ CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.i: cmake_force
 CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\main.cpp" -o CMakeFiles\Flower_Exchange_group_project.dir\main.cpp.s
+=======
+CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.obj: D:/Project/LSEG\ project/LSEG/LSEG-Flower-Exchange-Projoect/main.cpp
+CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.obj: CMakeFiles/Flower_Exchange_group_project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.obj -MF CMakeFiles\Flower_Exchange_group_project.dir\main.cpp.obj.d -o CMakeFiles\Flower_Exchange_group_project.dir\main.cpp.obj -c "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\main.cpp"
+
+CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\main.cpp" > CMakeFiles\Flower_Exchange_group_project.dir\main.cpp.i
+
+CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Flower_Exchange_group_project.dir/main.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\main.cpp" -o CMakeFiles\Flower_Exchange_group_project.dir\main.cpp.s
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
 
 # Object files for target Flower_Exchange_group_project
 Flower_Exchange_group_project_OBJECTS = \
@@ -94,7 +116,11 @@ Flower_Exchange_group_project.exe: CMakeFiles/Flower_Exchange_group_project.dir/
 Flower_Exchange_group_project.exe: CMakeFiles/Flower_Exchange_group_project.dir/linklibs.rsp
 Flower_Exchange_group_project.exe: CMakeFiles/Flower_Exchange_group_project.dir/objects1.rsp
 Flower_Exchange_group_project.exe: CMakeFiles/Flower_Exchange_group_project.dir/link.txt
+<<<<<<< HEAD
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Flower_Exchange_group_project.exe"
+=======
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Flower_Exchange_group_project.exe"
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Flower_Exchange_group_project.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -106,6 +132,10 @@ CMakeFiles/Flower_Exchange_group_project.dir/clean:
 .PHONY : CMakeFiles/Flower_Exchange_group_project.dir/clean
 
 CMakeFiles/Flower_Exchange_group_project.dir/depend:
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect" "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect" "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug" "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug" "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles\Flower_Exchange_group_project.dir\DependInfo.cmake" --color=$(COLOR)
+=======
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect" "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect" "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug" "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug" "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles\Flower_Exchange_group_project.dir\DependInfo.cmake" --color=$(COLOR)
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
 .PHONY : CMakeFiles/Flower_Exchange_group_project.dir/depend
 

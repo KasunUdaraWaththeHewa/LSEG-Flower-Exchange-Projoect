@@ -56,10 +56,17 @@ RM = "C:\Program Files\JetBrains\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
 CMAKE_SOURCE_DIR = "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect"
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug"
+=======
+CMAKE_SOURCE_DIR = "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect"
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug"
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +93,15 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\\CMakeFiles\progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Samudi Perera\Desktop\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" 0
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\\CMakeFiles\progress.marks"
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Project\LSEG project\LSEG\LSEG-Flower-Exchange-Projoect\cmake-build-debug\CMakeFiles" 0
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
 .PHONY : all
 
 # The main clean target

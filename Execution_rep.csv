@@ -1,4 +1,5 @@
 Order ID,Client_order_id ,Instruments,Side,Status,Quantity,Price,Reason,Trader_id,Transaction_time
+<<<<<<< HEAD
 ord1,aa13,Rose,1,New,300,65,,tr002,0.000556
 ord1,aa13,Rose,1,New,300,65,,tr002,0.000826
 ord2,aa14,Rose,2,Fill,100,55,,tr002,0.000360
@@ -272,3 +273,5 @@ ord64,ord001,Rose,1,Fill,30,100,,tr001,0.000322
 ord42,aa19,Rose,2,pFill,70,1,,tr002,0.000543
 ord64,ord001,Rose,1,Fill,30,100,,tr001,0.000693
 ord42,aa19,Rose,2,pFill,70,1,,tr002,0.000827
+=======
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a

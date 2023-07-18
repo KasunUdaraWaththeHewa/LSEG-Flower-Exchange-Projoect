@@ -1,4 +1,5 @@
 Order id,Quantity,Price,Price,Quantity,Order id
+<<<<<<< HEAD
 ord6,500,20
 ,,,20,900,ord7
 ,,,1,500,ord8
@@ -11,3 +12,5 @@ ord20,700,2
 ,,,85,100,ord44
 ,,,100,500,ord45
 ord46,200,5
+=======
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a

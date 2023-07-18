@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Install script for directory: C:/Users/Samudi Perera/Desktop/LSEG-Flower-Exchange-Projoect
+=======
+# Install script for directory: D:/Project/LSEG project/LSEG/LSEG-Flower-Exchange-Projoect
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +49,9 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
+<<<<<<< HEAD
 file(WRITE "C:/Users/Samudi Perera/Desktop/LSEG-Flower-Exchange-Projoect/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+=======
+file(WRITE "D:/Project/LSEG project/LSEG/LSEG-Flower-Exchange-Projoect/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

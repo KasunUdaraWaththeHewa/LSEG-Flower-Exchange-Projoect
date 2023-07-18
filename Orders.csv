@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Orders.csv,,,,,
 Client Order ID,Instrument,Side,Quantity,Price,Trader ID
 aa13,Rose,1,300,65,tr002
@@ -65,3 +66,10 @@ ord001,Rose,1,200,200,tr001
 =======
 ord001,Rose,1,30,100,tr001
 >>>>>>> 4ce0c8061ed5e7592f6fc9dab91dcbdf2b4b7d23
+=======
+Orders.csv,,,,
+Client Order ID,Instrument,Side,Quantity,Price
+aa13,Rose,1,100,65
+aa14,Rose,1,100,55
+aa15,Rose,2,300,1
+>>>>>>> 627c429c587c2348ade17fbc78f9e43709eaf02a
