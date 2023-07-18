@@ -60,4 +60,8 @@ aa54,Lavender,1,200,5,tr002
 aa55,Lavender,2,900,1,tr002
 aa56,Lavender,1,700,2,tr002
 aa58,Lavender,1,500,20,tr002
+<<<<<<< HEAD
 ord001,Rose,1,200,200,tr001
+=======
+ord001,Rose,1,30,100,tr001
+>>>>>>> 4ce0c8061ed5e7592f6fc9dab91dcbdf2b4b7d23

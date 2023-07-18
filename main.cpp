@@ -2,10 +2,8 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
-#include <cstdio>
 #include <string>
 #include <chrono>
-#include <thread>
 #include <iomanip>
 
 using namespace std;
@@ -13,31 +11,33 @@ using namespace std;
 chrono::system_clock::time_point timeStarted;
 chrono::system_clock::time_point timeEnded;
 
-//creating struct named order
+//creating struct named order to hold the details of one order
 typedef struct Order{
     string client_order_id;
     string instruments;
     int side;
-    double price;
     int quantity;
+    double price;
     string trader_id;
     string order_id;
-    basic_string<char> status;
+    string status;
     string reason;
 }Order;
 
 string transactionTime(){
-    //std::chrono::duration<double> duration = timeEnded - timeStarted;
-   // SYSTEMTIME sTime = duration;
-  //  GetLocalTime(&sTime);
-    time_t started_Time = std::chrono::system_clock::to_time_t(timeStarted);
-    time_t ended_Time = std::chrono::system_clock::to_time_t(timeEnded);
-    time_t duration=ended_Time-started_Time;
-    tm* timeInfo = std::localtime(&duration);
-    stringstream buf;
-    buf << put_time(timeInfo, "%Y.%m.%d-%H.%M.%S") << "." << setfill('0') << setw(3) << duration%1000 << "\n";
-    //buf << sTime.wYear << "-" << sTime.wMonth << "-" << sTime.wDay << " " << sTime.wHour << ":" << sTime.wMinute << ":" << sTime.wSecond << ":" << sTime.wMilliseconds;
-    return buf.str();
+    std::chrono::duration<double> duration = timeEnded - timeStarted;
+    //SYSTEMTIME sTime = duration;
+    // GetLocalTime(&sTime);
+    //time_t started_Time = std::chrono::system_clock::to_time_t(timeStarted);
+    //time_t ended_Time = std::chrono::system_clock::to_time_t(timeEnded);
+    //time_t duration=ended_Time-started_Time;
+    //tm* timeInfo = std::localtime(&duration);
+    return to_string(duration.count());
+    //stringstream buf;
+//    buf << put_time(timeInfo, "%Y.%m.%d-%H.%M.%S") << "." << setfill('0') << setw(3) << duration%1000 << "\n";
+//    buf << sTime.wYear << "-" << sTime.wMonth << "-" << sTime.wDay << " " << sTime.wHour << ":" << sTime.wMinute << ":" << sTime.wSecond << ":" << sTime.wMilliseconds;
+    // return buf.str();
+
 }
 
 //creating three vectors to store data
@@ -48,50 +48,46 @@ vector<Order> sellOrders;
 int i=0;
 
 void createOrderBooksAndReports(){
-    fstream fout;
-    remove("OrderBookRose.csv");
-    fout.open("OrderBookRose.csv", ios::out | ios::app);
+    cout<<"OrderBooks and Execution Books generated.\n";
+    fstream fout;   //create an object of type fstream
+    remove("OrderBookRose.csv");    //Remove previously existing data in the file
+    fout.open("OrderBookRose.csv", ios::out | ios::app);    //open the file in append mode : out - write , app - append
     if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("OrderBookLavender.csv");
     fout.open("OrderBookLavender.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("OrderBookLotus.csv");
     fout.open("OrderBookLotus.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("OrderBookTulip.csv");
     fout.open("OrderBookTulip.csv", ios::out | ios::app);
-    1;if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+    if(fout.is_open()){
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("OrderBookOrchid.csv");
     fout.open("OrderBookOrchid.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << "order id" << "," << "quantity" << "," << "price" << "," << "price" << "," << "quantity" << "," <<  "order id" << endl;
+        fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
     }
     remove("Execution_rep.csv");
     fout.open("Execution_rep.csv", ios::out | ios::app);
     if(fout.is_open()){
-        fout << "Order ID"<< "," << "client_order_id "<< "," << "instruments" << "," << "side" << "," << "status" << "," << "quantity" << "," << "price" << "," << "reason" << "," << "trader_id" << "," << "transaction_time" << endl;
+        fout << "Order ID"<< "," << "Client_order_id "<< "," << "Instruments" << "," << "Side" << "," << "Status" << "," << "Quantity" << "," << "Price" << "," << "Reason" << "," << "Trader_id" << "," << "Transaction_time" << endl;
         fout.close();
     }
 }
-bool compareBuy(const Order & a, const Order & b) {
-    return a.price < b.price;
-}
-bool compareSell(const Order & a, const Order & b) {
-    return a.price > b.price;
-}
+
 void updateOrderBooks(Order od){
     fstream fout;
     if(od.instruments == "Rose"){
@@ -152,29 +148,28 @@ void updateOrderBooks(Order od){
     }
 }
 void updateExecutionReport(Order od, int quantity = -1, double price = -1.0) {
-    string transaction_time =transactionTime();
     fstream fout;
     fout.open("Execution_rep.csv", ios::out | ios::app);
     if(fout.is_open()){
+        timeEnded = chrono::system_clock::now();
+        string transaction_time =transactionTime();
         fout << od.order_id << "," << od.client_order_id << "," << od.instruments << "," << od.side << "," << od.status << "," << od.quantity << "," << od.price << "," << od.reason << "," << od.trader_id << "," << transaction_time;
-        if(quantity != -1) {
-            fout << "," << quantity;
-        }
-        if(price != -1.0) {
-            fout << "," << price;
-        }
         fout << endl;
         fout.close();
-        cout<<"\n\n";
-        timeEnded = chrono::system_clock::now();
     }
+}
+bool compareBuy(const Order & a, const Order & b) {
+    return a.price > b.price;
+}
+bool compareSell(const Order & a, const Order & b) {
+    return a.price < b.price;
 }
 
 void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
 
     if (order.side == 1){//if buyer
         if (sell.empty()){//if sell vector is empty
-            buy.push_back(order);
+            buy.push_back(order);//buy order is added to the vector buy
             sort(buy.begin(), buy.end(), compareBuy);
             if (order.status != "pFill")
                 updateExecutionReport(order);
@@ -184,15 +179,15 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
             Order s = sell[j];
             if (s.instruments != order.instruments)
                 continue;
-            if (s.price > order.price){//if s.price>order.price
+            if (s.price > order.price){
                 buy.push_back(order);
                 sort(buy.begin(), buy.end(), compareBuy);
                 if (order.status != "pFill")
                     updateExecutionReport(order);
                 return;
             }
-            else if (s.price == order.price){//if s.price == order.price
-                if (s.quantity == order.quantity){ //if s.quantity==order.quantity
+            else if (s.price == order.price){
+                if (s.quantity == order.quantity){
                     order.status = "Fill";
                     updateExecutionReport(order);
                     s.status = "Fill";
@@ -201,7 +196,7 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
                     sort(sell.begin(), sell.end(), compareSell);
 
                     return;
-                }else if (s.quantity < order.quantity){//if s.quantity < order.quantity
+                }else if (s.quantity < order.quantity){
                     order.status = "pFill";
                     order.quantity = order.quantity - s.quantity;
                     updateExecutionReport(order,s.quantity);
@@ -228,15 +223,15 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
                 }
             }
             else{// sells.Price < price
-                if (s.quantity == order.quantity){//if s.quantity==order.quantity
+                if (s.quantity == order.quantity){
                     order.status = "Fill";
-                    updateExecutionReport(order, s.price);
+                    updateExecutionReport(order, s.price);  //------------------------------------
                     s.status = "Fill";
                     updateExecutionReport(s);
                     sell.erase(sell.begin() + j);
                     sort(sell.begin(), sell.end(), compareSell);
                     return;
-                }else if (s.quantity > order.quantity){//if s.quantity==order.quantity
+                }else if (s.quantity > order.quantity){
                     order.status = "Fill";
                     updateExecutionReport(order,s.price);
                     s.status = "pFill";
@@ -249,7 +244,7 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
                     order.status = "pFill";
                     order.quantity = order.quantity - s.quantity;
                     updateExecutionReport(order,s.quantity, s.price);
-                    s.status = 2;
+                    s.status = "Fill";
                     updateExecutionReport(order);
                     sell.erase(sell.begin() + j);
                     sort(sell.begin(), sell.end(), compareSell);
@@ -362,7 +357,7 @@ void findOrder(Order &order, vector<Order> &buy, vector<Order> &sell){
         sort(sell.begin(), sell.end(), compareSell);
         if (order.status != "pFill")
             updateExecutionReport(order);
-    }
+        }
 }
 
 void load_csv(){
@@ -388,8 +383,8 @@ void load_csv(){
             getline(ss, client_order_id, ',');
             getline(ss, instrument, ',');
             getline(ss, side, ',');
-            getline(ss, price, ',');
             getline(ss, quantity, ',');
+            getline(ss, price, ',');
             getline(ss, trader_id, ',');
             order_id="ord"+ to_string(i);
             i++;
@@ -408,41 +403,41 @@ void load_csv(){
                 continue;  // Skip to the next line or perform other appropriate actions
             }
 
-            Order order = {client_order_id, instrument, sideInt, priceDouble, quantityInt, trader_id ,order_id, status ,reason};
+            Order order = {client_order_id, instrument, sideInt, quantityInt,priceDouble, trader_id ,order_id, status ,reason};
             if(order.client_order_id.size()<=7){
-                if((instrument=="Rose")||(instrument=="Lavender")||(instrument=="Lotus")||(instrument=="Tulip")||(instrument=="Orchid")){
-                    if((side=="1")||(side=="2")){
+                if((order.instruments=="Rose")||(order.instruments=="Lavender")||(order.instruments=="Lotus")||(order.instruments=="Tulip")||(order.instruments=="Orchid")){
+                    if((order.side == 1 )||(order.side==2)){
                         if(order.price>0.0){
-                            if(((order.quantity<=1000)&&(order.quantity>10))&&(order.quantity%10==0)){
+                            if(((order.quantity<1000)&&(order.quantity>10))&&(order.quantity%10==0)){
                                 if(trader_id.size()<=7){
                                     //not rejected
                                     updateOrderBooks(order);
                                     orders.push_back(order);
                                     findOrder(order, buyOrders, sellOrders);
                                 }else{
-                                    status="rejected";
-                                    reason="invalid trader_id";
+                                    order.status="rejected";
+                                    order.reason="invalid trader_id";
                                 }
                             }else{
-                                status="rejected";
-                                reason="invalid quantity";
+                                order.status="rejected";
+                                order.reason="invalid quantity";
                             }
                         }else{
-                            status="rejected";
-                            reason="invalid price";
+                            order.status="rejected";
+                            order.reason="invalid price";
                         }
                     }else{
-                        status="rejected";
-                        reason="invalid side";
+                        order.status="rejected";
+                        order.reason="invalid side";
                     }
                 }else{
-                    status="rejected";
-                    reason="invalid instruments";
+                    order.status="rejected";
+                    order.reason="invalid instruments";
                 }
 
             }else{
-                status="rejected";
-                reason="invalid client order id";
+                order.status="rejected";
+                order.reason="invalid client order id";
             }
 
             orders.push_back(order);
@@ -452,6 +447,7 @@ void load_csv(){
     }
 }
 void addOrder(){
+    cout<<"You chosed adding new Order\n";
     string client_order_id;
     string instrument;
     int side;
@@ -462,29 +458,31 @@ void addOrder(){
     string status="New";
     order_id="ord"+ to_string(i);
     i++;
-    cout<<"Enter client_order_id : ";
+    cout<<"\n";
+    cout<<"Enter client_order_id (client Order Id should be less than or equal to 7 characters) : ";
     cin>>client_order_id;
     if(client_order_id.size()<=7){
-        cout<<"Enter instrumrnt : ";
+        cout<<"Enter instrument (Instruments can be 'Rose, Lavender, Lotus, Tulip, Orchid) : ";
         cin>>instrument;
         if((instrument=="Rose")||(instrument=="Lavender")||(instrument=="Lotus")||(instrument=="Tulip")||(instrument=="Orchid")){
-            cout<<"Enter Side : ";
+            cout<<"Enter Side (For buyers 1, for Sellers 2 ): ";
             cin>>side;
             if((side==1)||(side==2)){
-                cout<<"Enter price : ";
+                cout<<"Enter price (Enter Valid Price) : ";
                 cin>>price;
                 if(price>0.0){
-                    cout<<"Enter quantity : ";
+                    cout<<"Enter quantity (Quantity should be 10<quantity<=1000 and a multiple of 10 ): ";
                     cin>>quantity;
                     if(((quantity<=1000)&&(quantity>10))&&(quantity%10==0)){
                         cout<<"Enter Trader ID : ";
                         cin>>trader_id;
                         if(trader_id.size()<=7){
-                            Order order = {client_order_id, instrument, side, price, quantity, trader_id ,order_id, status ,reason};
+                            cout<<"You have added valid data so your orderbooks and execution report will be generated soon\n";
+                            Order order = {client_order_id, instrument, side, quantity, price, trader_id ,order_id, status ,reason};
                             updateOrderBooks(order);
                             fstream fout;
                             fout.open("Orders.csv", ios::out | ios::app);
-                            fout << client_order_id << "," << instrument << "," << side << "," << price << "," << quantity << "," << trader_id << endl;
+                            fout << client_order_id << "," << instrument << "," << side << "," << quantity << "," << price << "," << trader_id << endl;
                             fout.close();
                             orders.push_back(order);
                             timeStarted = chrono::system_clock::now();
@@ -511,11 +509,12 @@ void addOrder(){
 
 
 int main() {
-    load_csv();// load .csv's data to the vector order
-    int ch=0;
     cout<<"Welcome to Flora Lanka........... \n\n";
+    load_csv();// load .csv's data to the vector order
+    cout <<"existing Orders.csv's data are loaded \n\n";
+    int ch=0;
     do{
-        cout<<"Add order - (+1)\tTerminate - (-1)\n";
+        cout<<"Add order - ( press +1)\tTerminate - (press -1)\n";
         cout<<"Enter What you want to proceed : ";
         cin>>ch;
         cout<<"\n";

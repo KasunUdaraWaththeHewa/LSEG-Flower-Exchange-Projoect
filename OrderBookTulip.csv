@@ -1,5 +1,13 @@
-order id,quantity,price,price,quantity,order id
-,,,80,100,ord17
-ord18,20,500
-,,,500,100,ord29
-,,,900,20,ord35
+Order id,Quantity,Price,Price,Quantity,Order id
+ord9,300,65
+,,,55,100,ord10
+ord11,100,75
+ord16,700,2
+,,,100,80,ord17
+ord18,500,20
+,,,85,100,ord28
+,,,100,500,ord29
+ord30,200,5
+,,,1,900,ord31
+,,,20,900,ord35
+,,,1,500,ord36

@@ -1,4 +1,4 @@
-# Install script for directory: D:/Project/LSEG project/Flower Exchange_group project
+# Install script for directory: C:/Users/Samudi Perera/Desktop/LSEG-Flower-Exchange-Projoect
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Project/LSEG project/Flower Exchange_group project/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Samudi Perera/Desktop/LSEG-Flower-Exchange-Projoect/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
