@@ -27,21 +27,9 @@ typedef struct Order{
 
 string transactionTime(){
     std::chrono::duration<double> duration = timeEnded - timeStarted;
-    //SYSTEMTIME sTime = duration;
-    // GetLocalTime(&sTime);
-    //time_t started_Time = std::chrono::system_clock::to_time_t(timeStarted);
-    //time_t ended_Time = std::chrono::system_clock::to_time_t(timeEnded);
-    //time_t duration=ended_Time-started_Time;
-    //tm* timeInfo = std::localtime(&duration);
     return to_string(duration.count());
-    //stringstream buf;
-//    buf << put_time(timeInfo, "%Y.%m.%d-%H.%M.%S") << "." << setfill('0') << setw(3) << duration%1000 << "\n";
-//    buf << sTime.wYear << "-" << sTime.wMonth << "-" << sTime.wDay << " " << sTime.wHour << ":" << sTime.wMinute << ":" << sTime.wSecond << ":" << sTime.wMilliseconds;
-    // return buf.str();
-
 }
 
-//creating three vectors to store data
 vector<Order> orders;
 vector<Order> buyOrders;
 vector<Order> sellOrders;
@@ -50,9 +38,9 @@ int i=0;
 
 void createOrderBooksAndReports(){
     cout<<"OrderBooks and Execution Books generated.\n";
-    fstream fout;   //create an object of type fstream
-    remove("OrderBookRose.csv");    //Remove previously existing data in the file
-    fout.open("OrderBookRose.csv", ios::out | ios::app);    //open the file in append mode : out - write , app - append
+    fstream fout;
+    remove("OrderBookRose.csv");
+    fout.open("OrderBookRose.csv", ios::out | ios::app);
     if(fout.is_open()){
         fout << "Order id" << "," << "Quantity" << "," << "Price" << "," << "Price" << "," << "Quantity" << "," <<  "Order id" << endl;
         fout.close();
